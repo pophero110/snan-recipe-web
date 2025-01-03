@@ -1,0 +1,7 @@
+{
+  "/upload/page": "app/upload/page.js",
+  "/api/parse-youtube-short/route": "app/api/parse-youtube-short/route.js",
+  "/page": "app/page.js",
+  "/recipe/[id]/page": "app/recipe/[id]/page.js",
+  "/recipe/[id]/progress/page": "app/recipe/[id]/progress/page.js"
+}
