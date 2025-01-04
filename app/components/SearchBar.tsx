@@ -14,7 +14,7 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative mx-4 my-2">
+    <form onSubmit={handleSubmit} className="relative mx-4">
       <div className="relative flex items-center bg-white rounded-lg shadow-sm border border-gray-200 hover:border-gray-300 transition-colors">
         <input
           type="text"

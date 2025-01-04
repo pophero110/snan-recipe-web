@@ -1,18 +1,25 @@
-import { recipes } from '../data/recipes'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { recipes } from "../data/recipes";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
-export default function SearchPage({ searchParams }: { searchParams: { q: string } }) {
-  const query = searchParams.q?.toLowerCase() || ''
+export default function SearchPage({
+  searchParams,
+}: {
+  searchParams: { q: string };
+}) {
+  const query = searchParams.q?.toLowerCase() || "";
   const filteredRecipes = recipes.filter(
     (recipe) =>
       recipe.name.toLowerCase().includes(query) ||
       recipe.description.toLowerCase().includes(query)
-  )
+  );
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Link href="/" className="text-gray-600 hover:underline mb-4 inline-flex items-center">
+    <div className="container mx-auto max-w-3xl">
+      <Link
+        href="/"
+        className="text-gray-600 hover:underline mb-4 inline-flex items-center"
+      >
         <ArrowLeft size={20} className="mr-2" />
         Back to recipes
       </Link>
@@ -22,7 +29,11 @@ export default function SearchPage({ searchParams }: { searchParams: { q: string
       ) : (
         <div className="grid grid-cols-1 gap-8">
           {filteredRecipes.map((recipe) => (
-            <Link href={`/recipe/${recipe.id}`} key={recipe.id} className="block">
+            <Link
+              href={`/recipe/${recipe.id}`}
+              key={recipe.id}
+              className="block"
+            >
               <div className="bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
                 <img
                   src={recipe.image}
@@ -33,7 +44,8 @@ export default function SearchPage({ searchParams }: { searchParams: { q: string
                   <h2 className="text-xl font-light mb-2">{recipe.name}</h2>
                   <p className="text-gray-600 text-sm">{recipe.description}</p>
                   <div className="mt-4 text-sm text-gray-500">
-                    {recipe.ingredients.length} ingredients | {recipe.cookTime} mins
+                    {recipe.ingredients.length} ingredients | {recipe.cookTime}{" "}
+                    mins
                   </div>
                 </div>
               </div>
@@ -42,6 +54,5 @@ export default function SearchPage({ searchParams }: { searchParams: { q: string
         </div>
       )}
     </div>
-  )
+  );
 }
-

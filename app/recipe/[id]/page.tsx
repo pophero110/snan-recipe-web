@@ -1,56 +1,69 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { recipes as initialRecipes } from '../../data/recipes'
-import Link from 'next/link'
-import { ArrowLeft, Clock, Users, Plus, Check, PlayCircle } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { recipes as initialRecipes } from "../../data/recipes";
+import Link from "next/link";
+import { ArrowLeft, Clock, Users, Plus, Check, PlayCircle } from "lucide-react";
 
 export default function RecipePage({ params }: { params: { id: string } }) {
-  const [recipe, setRecipe] = useState<any>(null)
-  const [addedIngredients, setAddedIngredients] = useState<Set<number>>(new Set())
+  const [recipe, setRecipe] = useState<any>(null);
+  const [addedIngredients, setAddedIngredients] = useState<Set<number>>(
+    new Set()
+  );
 
   useEffect(() => {
-    const storedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]')
-    const allRecipes = [...initialRecipes, ...storedRecipes]
-    const foundRecipe = allRecipes.find((r) => r.id === params.id)
-    setRecipe(foundRecipe)
+    const storedRecipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+    const allRecipes = [...initialRecipes, ...storedRecipes];
+    const foundRecipe = allRecipes.find((r) => r.id === params.id);
+    setRecipe(foundRecipe);
 
-    const storedList = localStorage.getItem('shoppingList')
+    const storedList = localStorage.getItem("shoppingList");
     if (storedList && foundRecipe) {
-      const currentList = new Set(JSON.parse(storedList))
-      setAddedIngredients(new Set(foundRecipe.ingredients.reduce((acc: number[], ingredient: string, index: number) => {
-        if (currentList.has(ingredient)) {
-          acc.push(index)
-        }
-        return acc
-      }, [])))
+      const currentList = new Set(JSON.parse(storedList));
+      setAddedIngredients(
+        new Set(
+          foundRecipe.ingredients.reduce(
+            (acc: number[], ingredient: string, index: number) => {
+              if (currentList.has(ingredient)) {
+                acc.push(index);
+              }
+              return acc;
+            },
+            []
+          )
+        )
+      );
     }
-  }, [params.id])
+  }, [params.id]);
 
   if (!recipe) {
-    return <div>Recipe not found</div>
+    return <div>Recipe not found</div>;
   }
 
   const addToShoppingList = (ingredient: string, index: number) => {
-    const storedList = localStorage.getItem('shoppingList')
-    let currentList = storedList ? JSON.parse(storedList) : []
-    
+    const storedList = localStorage.getItem("shoppingList");
+    let currentList = storedList ? JSON.parse(storedList) : [];
+
     if (!currentList.includes(ingredient)) {
-      currentList.push(ingredient)
-      localStorage.setItem('shoppingList', JSON.stringify(currentList))
-      setAddedIngredients(new Set(addedIngredients).add(index))
+      currentList.push(ingredient);
+      localStorage.setItem("shoppingList", JSON.stringify(currentList));
+      setAddedIngredients(new Set(addedIngredients).add(index));
     }
-  }
+  };
 
   const getYoutubeVideoId = (url: string) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/
-    const match = url.match(regExp)
-    return (match && match[2].length === 11) ? match[2] : null
-  }
+    const regExp =
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Link href="/" className="text-gray-600 hover:underline mb-4 inline-flex items-center">
+    <div className="container mx-auto py-4 px-4 max-w-3xl">
+      <Link
+        href="/"
+        className="text-gray-600 hover:underline mb-4 inline-flex items-center"
+      >
         <ArrowLeft size={20} className="mr-2" />
         Back to recipes
       </Link>
@@ -59,7 +72,9 @@ export default function RecipePage({ params }: { params: { id: string } }) {
         {recipe.youtubeUrl ? (
           <div className="aspect-w-9 aspect-h-16 mb-6">
             <iframe
-              src={`https://www.youtube.com/embed/${getYoutubeVideoId(recipe.youtubeUrl)}?autoplay=0`}
+              src={`https://www.youtube.com/embed/${getYoutubeVideoId(
+                recipe.youtubeUrl
+              )}?autoplay=0`}
               title={`YouTube video player for ${recipe.name}`}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -87,7 +102,10 @@ export default function RecipePage({ params }: { params: { id: string } }) {
         <h2 className="text-xl font-light mb-2">Ingredients</h2>
         <ul className="list-none mb-6 space-y-2">
           {recipe.ingredients.map((ingredient: string, index: number) => (
-            <li key={index} className="flex items-center justify-between bg-white p-3 shadow-sm">
+            <li
+              key={index}
+              className="flex items-center justify-between bg-white p-3 shadow-sm"
+            >
               <span className="text-gray-600">{ingredient}</span>
               <button
                 onClick={() => addToShoppingList(ingredient, index)}
@@ -133,6 +151,5 @@ export default function RecipePage({ params }: { params: { id: string } }) {
         </ol>
       </div>
     </div>
-  )
+  );
 }
-

@@ -1,33 +1,36 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { ArrowLeft, Trash2 } from 'lucide-react'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { ArrowLeft, Trash2 } from "lucide-react";
 
 export default function ShoppingListPage() {
-  const [shoppingList, setShoppingList] = useState<string[]>([])
+  const [shoppingList, setShoppingList] = useState<string[]>([]);
 
   useEffect(() => {
-    const storedList = localStorage.getItem('shoppingList')
+    const storedList = localStorage.getItem("shoppingList");
     if (storedList) {
-      setShoppingList(JSON.parse(storedList))
+      setShoppingList(JSON.parse(storedList));
     }
-  }, [])
+  }, []);
 
   const removeItem = (index: number) => {
-    const newList = shoppingList.filter((_, i) => i !== index)
-    setShoppingList(newList)
-    localStorage.setItem('shoppingList', JSON.stringify(newList))
-  }
+    const newList = shoppingList.filter((_, i) => i !== index);
+    setShoppingList(newList);
+    localStorage.setItem("shoppingList", JSON.stringify(newList));
+  };
 
   const clearList = () => {
-    setShoppingList([])
-    localStorage.removeItem('shoppingList')
-  }
+    setShoppingList([]);
+    localStorage.removeItem("shoppingList");
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Link href="/" className="text-gray-600 hover:underline mb-4 inline-flex items-center">
+    <div className="container mx-auto py-4 px-4 max-w-3xl">
+      <Link
+        href="/"
+        className="text-gray-600 hover:underline mb-4 inline-flex items-center"
+      >
         <ArrowLeft size={20} className="mr-2" />
         Back to recipes
       </Link>
@@ -38,9 +41,15 @@ export default function ShoppingListPage() {
         <>
           <ul className="space-y-2 mb-6">
             {shoppingList.map((item, index) => (
-              <li key={index} className="flex items-center justify-between bg-white p-3 shadow-sm">
+              <li
+                key={index}
+                className="flex items-center justify-between bg-white p-3 shadow-sm"
+              >
                 <span>{item}</span>
-                <button onClick={() => removeItem(index)} className="text-gray-400 hover:text-gray-600">
+                <button
+                  onClick={() => removeItem(index)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
                   <Trash2 size={18} />
                 </button>
               </li>
@@ -55,6 +64,5 @@ export default function ShoppingListPage() {
         </>
       )}
     </div>
-  )
+  );
 }
-

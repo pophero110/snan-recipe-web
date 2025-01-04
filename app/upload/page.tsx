@@ -1,120 +1,134 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { ArrowLeft, Plus, Minus, Youtube } from 'lucide-react'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft, Plus, Minus, Youtube } from "lucide-react";
 
 export default function UploadRecipePage() {
-  const router = useRouter()
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [image, setImage] = useState('/placeholder.svg?height=300&width=400')
-  const [ingredients, setIngredients] = useState([''])
-  const [instructions, setInstructions] = useState([{ text: '', duration: '' }])
-  const [cookTime, setCookTime] = useState('')
-  const [servings, setServings] = useState('')
-  const [youtubeUrl, setYoutubeUrl] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("/placeholder.svg?height=300&width=400");
+  const [ingredients, setIngredients] = useState([""]);
+  const [instructions, setInstructions] = useState([
+    { text: "", duration: "" },
+  ]);
+  const [cookTime, setCookTime] = useState("");
+  const [servings, setServings] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleIngredientChange = (index: number, value: string) => {
-    const newIngredients = [...ingredients]
-    newIngredients[index] = value
-    setIngredients(newIngredients)
-  }
+    const newIngredients = [...ingredients];
+    newIngredients[index] = value;
+    setIngredients(newIngredients);
+  };
 
-  const handleInstructionChange = (index: number, field: 'text' | 'duration', value: string) => {
-    const newInstructions = [...instructions]
-    newInstructions[index] = { ...newInstructions[index], [field]: value }
-    setInstructions(newInstructions)
-  }
+  const handleInstructionChange = (
+    index: number,
+    field: "text" | "duration",
+    value: string
+  ) => {
+    const newInstructions = [...instructions];
+    newInstructions[index] = { ...newInstructions[index], [field]: value };
+    setInstructions(newInstructions);
+  };
 
   const addIngredient = () => {
-    setIngredients([...ingredients, ''])
-  }
+    setIngredients([...ingredients, ""]);
+  };
 
   const removeIngredient = (index: number) => {
-    const newIngredients = ingredients.filter((_, i) => i !== index)
-    setIngredients(newIngredients)
-  }
+    const newIngredients = ingredients.filter((_, i) => i !== index);
+    setIngredients(newIngredients);
+  };
 
   const addInstruction = () => {
-    setInstructions([...instructions, { text: '', duration: '' }])
-  }
+    setInstructions([...instructions, { text: "", duration: "" }]);
+  };
 
   const removeInstruction = (index: number) => {
-    const newInstructions = instructions.filter((_, i) => i !== index)
-    setInstructions(newInstructions)
-  }
+    const newInstructions = instructions.filter((_, i) => i !== index);
+    setInstructions(newInstructions);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     const newRecipe = {
       id: Date.now().toString(),
       name,
       description,
       image,
-      ingredients: ingredients.filter(i => i.trim() !== ''),
+      ingredients: ingredients.filter((i) => i.trim() !== ""),
       instructions: instructions
-        .filter(i => i.text.trim() !== '')
-        .map(i => ({ text: i.text, duration: i.duration ? parseInt(i.duration) : undefined })),
+        .filter((i) => i.text.trim() !== "")
+        .map((i) => ({
+          text: i.text,
+          duration: i.duration ? parseInt(i.duration) : undefined,
+        })),
       cookTime: parseInt(cookTime),
       servings: parseInt(servings),
-      youtubeUrl
-    }
+      youtubeUrl,
+    };
 
     // Get existing recipes from local storage
-    const existingRecipes = JSON.parse(localStorage.getItem('recipes') || '[]')
-    
+    const existingRecipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+
     // Add new recipe
-    const updatedRecipes = [...existingRecipes, newRecipe]
-    
+    const updatedRecipes = [...existingRecipes, newRecipe];
+
     // Save updated recipes to local storage
-    localStorage.setItem('recipes', JSON.stringify(updatedRecipes))
+    localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
 
     // Redirect to home page
-    router.push('/')
-  }
+    router.push("/");
+  };
 
   const handleYoutubeUrlSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     try {
-      const response = await fetch('/api/parse-youtube-short', {
-        method: 'POST',
+      const response = await fetch("/api/parse-youtube-short", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ url: youtubeUrl }),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to parse YouTube Short video')
+        throw new Error("Failed to parse YouTube Short video");
       }
 
-      const data = await response.json()
+      const data = await response.json();
 
       // Update the form with the parsed data
-      setName(data.name)
-      setDescription(data.description)
-      setIngredients(data.ingredients)
-      setInstructions(data.instructions)
-      setCookTime(data.cookTime.toString())
-      setServings(data.servings.toString())
-      setImage(data.image)
+      setName(data.name);
+      setDescription(data.description);
+      setIngredients(data.ingredients);
+      setInstructions(data.instructions);
+      setCookTime(data.cookTime.toString());
+      setServings(data.servings.toString());
+      setImage(data.image);
     } catch (error) {
-      setError('Failed to parse YouTube Short video. Please check the URL and try again.')
+      setError(
+        "Failed to parse YouTube Short video. Please check the URL and try again."
+      );
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Link href="/" className="text-gray-600 hover:underline mb-4 inline-flex items-center">
+    <div className="container mx-auto  max-w-3xl">
+      <Link
+        href="/"
+        className="text-gray-600 hover:underline mb-4 inline-flex items-center"
+      >
         <ArrowLeft size={20} className="mr-2" />
         Back to recipes
       </Link>
@@ -136,7 +150,7 @@ export default function UploadRecipePage() {
             disabled={isLoading}
           >
             <Youtube size={20} className="mr-2" />
-            {isLoading ? 'Loading...' : 'Parse Video'}
+            {isLoading ? "Loading..." : "Parse Video"}
           </button>
         </div>
         {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -144,7 +158,12 @@ export default function UploadRecipePage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Recipe Name</label>
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Recipe Name
+          </label>
           <input
             type="text"
             id="name"
@@ -155,7 +174,12 @@ export default function UploadRecipePage() {
           />
         </div>
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
           <textarea
             id="description"
             value={description}
@@ -165,7 +189,12 @@ export default function UploadRecipePage() {
           />
         </div>
         <div>
-          <label htmlFor="cookTime" className="block text-sm font-medium text-gray-700">Cook Time (minutes)</label>
+          <label
+            htmlFor="cookTime"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Cook Time (minutes)
+          </label>
           <input
             type="number"
             id="cookTime"
@@ -176,7 +205,12 @@ export default function UploadRecipePage() {
           />
         </div>
         <div>
-          <label htmlFor="servings" className="block text-sm font-medium text-gray-700">Servings</label>
+          <label
+            htmlFor="servings"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Servings
+          </label>
           <input
             type="number"
             id="servings"
@@ -187,7 +221,9 @@ export default function UploadRecipePage() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Ingredients</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Ingredients
+          </label>
           {ingredients.map((ingredient, index) => (
             <div key={index} className="flex items-center mt-2">
               <input
@@ -214,19 +250,25 @@ export default function UploadRecipePage() {
           </button>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Instructions</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Instructions
+          </label>
           {instructions.map((instruction, index) => (
             <div key={index} className="flex items-center mt-2">
               <textarea
                 value={instruction.text}
-                onChange={(e) => handleInstructionChange(index, 'text', e.target.value)}
+                onChange={(e) =>
+                  handleInstructionChange(index, "text", e.target.value)
+                }
                 className="block w-full border border-gray-300 rounded-md shadow-sm p-2"
                 placeholder="Instruction step"
               />
               <input
                 type="number"
                 value={instruction.duration}
-                onChange={(e) => handleInstructionChange(index, 'duration', e.target.value)}
+                onChange={(e) =>
+                  handleInstructionChange(index, "duration", e.target.value)
+                }
                 className="ml-2 w-20 border border-gray-300 rounded-md shadow-sm p-2"
                 placeholder="Minutes"
               />
@@ -255,6 +297,5 @@ export default function UploadRecipePage() {
         </button>
       </form>
     </div>
-  )
+  );
 }
-

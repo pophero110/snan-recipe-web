@@ -1,7 +1,9 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
-node_modules/
+/node_modules
+/.pnp
+.pnp.js
 
 # Expo
 .expo/
@@ -20,6 +22,14 @@ expo-env.d.ts
 # Metro
 .metro-health-check*
 
+# testing
+/coverage
+
+# next.js
+.next/
+/out/
+/build
+
 # debug
 npm-debug.*
 yarn-debug.*
@@ -34,5 +44,8 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+next-env.d.ts
 
+# misc
 app-example
+.vercel
