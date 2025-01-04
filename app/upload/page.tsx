@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Plus, Minus, Youtube } from "lucide-react";
 
 export default function UploadRecipePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("/placeholder.svg?height=300&width=400");
@@ -19,6 +20,13 @@ export default function UploadRecipePage() {
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const nameFromUrl = searchParams.get("name");
+    if (nameFromUrl) {
+      setName(decodeURIComponent(nameFromUrl));
+    }
+  }, [searchParams]);
 
   const handleIngredientChange = (index: number, value: string) => {
     const newIngredients = [...ingredients];
@@ -124,7 +132,7 @@ export default function UploadRecipePage() {
   };
 
   return (
-    <div className="container mx-auto  max-w-3xl">
+    <div className="container mx-auto p-4 max-w-3xl">
       <Link
         href="/"
         className="text-gray-600 hover:underline mb-4 inline-flex items-center"
@@ -133,7 +141,7 @@ export default function UploadRecipePage() {
         Back to recipes
       </Link>
       <h1 className="text-3xl font-light mb-6">Upload New Recipe</h1>
-
+      {/* 
       <form onSubmit={handleYoutubeUrlSubmit} className="mb-8">
         <div className="flex items-center">
           <input
@@ -154,7 +162,7 @@ export default function UploadRecipePage() {
           </button>
         </div>
         {error && <p className="text-red-500 mt-2">{error}</p>}
-      </form>
+      </form> */}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
