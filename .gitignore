@@ -27,8 +27,11 @@ expo-env.d.ts
 
 # next.js
 .next/
-/out/
-/build
+.next/*
+**/.next/**
+out/
+dist/
+build/
 
 # debug
 npm-debug.*
