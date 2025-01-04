@@ -15,7 +15,7 @@ export default function SearchPage({
   );
 
   return (
-    <div className="container mx-auto max-w-3xl">
+    <div className="container mx-auto py-4 px-4 max-w-3xl">
       <Link
         href="/"
         className="text-gray-600 hover:underline mb-4 inline-flex items-center"

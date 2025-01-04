@@ -5,12 +5,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import RecipeList from "./components/RecipeList";
-import { Link, BookOpen, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import SearchBar from "./components/SearchBar";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -23,22 +23,7 @@ export default function Home() {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href="/" className="flex items-center gap-2">
-                  <span>Home</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link href="/recipes" className="flex items-center gap-2">
-                  <BookOpen size={20} />
-                  <span>Recipes</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link href="/shopping" className="flex items-center gap-2">
+                <Link href="/shopping-list" className="flex items-center gap-2">
                   <ShoppingCart size={20} />
                   <span>Shopping List</span>
                 </Link>
@@ -48,11 +33,11 @@ export default function Home() {
         </SidebarContent>
       </Sidebar>
       <div className="flex-1 flex flex-col min-h-[100dvh]">
-        <header className="sticky top-0 z-40 bg-white px-2 h-14 flex items-center justify-between">
-          <SidebarTrigger className="md:hidden" />
+        <header className="sticky top-0 z-40 bg-white px-4 h-14 flex items-center justify-between">
+          <SidebarTrigger />
           <SearchBar />
         </header>
-        <main className="flex-grow p-4">
+        <main className="flex-grow px-4 py-2">
           <RecipeList />
         </main>
       </div>
