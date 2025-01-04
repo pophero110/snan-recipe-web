@@ -11,21 +11,28 @@ import RecipeList from "./components/RecipeList";
 import { ShoppingCart } from "lucide-react";
 import SearchBar from "./components/SearchBar";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
   return (
     <div className="flex min-h-[100dvh]">
       <Sidebar variant="floating" collapsible="offcanvas">
-        <SidebarHeader className="border-b p-4">
-          <h2 className="text-lg font-semibold">Minimalist Recipes</h2>
+        <SidebarHeader className="p-4">
+          <h2 className="text-lg font-semibold">Snan Recipes</h2>
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href="/shopping-list" className="flex items-center gap-2">
-                  <ShoppingCart size={20} />
-                  <span>Shopping List</span>
+                <Link
+                  href="/shopping-list"
+                  className="flex p-4 items-center justify-between gap-2"
+                >
+                  <div className="flex items-center gap-2">
+                    <ShoppingCart />
+                    <span>Shopping List</span>
+                  </div>
+                  <Badge>0</Badge>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
