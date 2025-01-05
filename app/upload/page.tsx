@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Plus, Minus, Youtube } from "lucide-react";
+import { ArrowLeft, Plus, Minus } from "lucide-react";
 
 export default function UploadRecipePage() {
   const router = useRouter();
@@ -17,9 +17,6 @@ export default function UploadRecipePage() {
   ]);
   const [cookTime, setCookTime] = useState("");
   const [servings, setServings] = useState("");
-  const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const nameFromUrl = searchParams.get("name");
@@ -78,7 +75,6 @@ export default function UploadRecipePage() {
         })),
       cookTime: parseInt(cookTime),
       servings: parseInt(servings),
-      youtubeUrl,
     };
 
     // Get existing recipes from local storage
@@ -94,43 +90,6 @@ export default function UploadRecipePage() {
     router.push("/");
   };
 
-  const handleYoutubeUrlSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch("/api/parse-youtube-short", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: youtubeUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to parse YouTube Short video");
-      }
-
-      const data = await response.json();
-
-      // Update the form with the parsed data
-      setName(data.name);
-      setDescription(data.description);
-      setIngredients(data.ingredients);
-      setInstructions(data.instructions);
-      setCookTime(data.cookTime.toString());
-      setServings(data.servings.toString());
-      setImage(data.image);
-    } catch (error) {
-      setError(
-        "Failed to parse YouTube Short video. Please check the URL and try again."
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="container mx-auto p-4 max-w-3xl">
       <Link
@@ -141,28 +100,6 @@ export default function UploadRecipePage() {
         Back to recipes
       </Link>
       <h1 className="text-3xl font-light mb-6">Upload New Recipe</h1>
-      {/* 
-      <form onSubmit={handleYoutubeUrlSubmit} className="mb-8">
-        <div className="flex items-center">
-          <input
-            type="url"
-            value={youtubeUrl}
-            onChange={(e) => setYoutubeUrl(e.target.value)}
-            placeholder="Enter YouTube Short URL"
-            className="flex-grow border border-gray-300 rounded-l-md shadow-sm p-2"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-red-600 text-white px-4 py-2 rounded-r-md hover:bg-red-700 transition-colors flex items-center"
-            disabled={isLoading}
-          >
-            <Youtube size={20} className="mr-2" />
-            {isLoading ? "Loading..." : "Parse Video"}
-          </button>
-        </div>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-      </form> */}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>

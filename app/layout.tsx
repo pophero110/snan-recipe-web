@@ -17,8 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} text-gray-900`}>
-        <SidebarProvider defaultOpen={false}>{children}</SidebarProvider>
+      <body className={`${inter.className} max-h-screen`}>
+        <SidebarProvider>{children}</SidebarProvider>
       </body>
     </html>
   );

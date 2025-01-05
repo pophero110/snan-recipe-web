@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { recipes as initialRecipes } from "../../data/recipes";
 import Link from "next/link";
-import { ArrowLeft, Clock, Users, Plus, Check, PlayCircle } from "lucide-react";
+import { Clock, Users, Plus, Check, PlayCircle } from "lucide-react";
 
 export default function RecipePage({ params }: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<any>(null);
@@ -37,7 +37,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   if (!recipe) {
-    return <div>Recipe not found</div>;
+    return <div></div>;
   }
 
   const addToShoppingList = (ingredient: string, index: number) => {
@@ -51,43 +51,15 @@ export default function RecipePage({ params }: { params: { id: string } }) {
     }
   };
 
-  const getYoutubeVideoId = (url: string) => {
-    const regExp =
-      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
-  };
-
   return (
-    <div className="container mx-auto py-4 px-4 max-w-3xl">
-      <Link
-        href="/"
-        className="text-gray-600 hover:underline mb-4 inline-flex items-center"
-      >
-        <ArrowLeft size={20} className="mr-2" />
-        Back to recipes
-      </Link>
-      <div className="mt-4">
-        <h1 className="text-3xl font-light mb-4">{recipe.name}</h1>
-        {recipe.youtubeUrl ? (
-          <div className="aspect-w-9 aspect-h-16 mb-6">
-            <iframe
-              src={`https://www.youtube.com/embed/${getYoutubeVideoId(
-                recipe.youtubeUrl
-              )}?autoplay=0`}
-              title={`YouTube video player for ${recipe.name}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        ) : (
-          <img
-            src={recipe.image}
-            alt={recipe.name}
-            className="w-full h-64 object-cover mb-6"
-          />
-        )}
+    <div className="px-4">
+      <div className="w-full mt-4">
+        <h1 className="text-2xl font-light mb-4">{recipe.name}</h1>
+        <img
+          src={recipe.image}
+          alt={recipe.name}
+          className="w-full h-64 object-cover mb-6"
+        />
         <p className="text-gray-600 mb-6">{recipe.description}</p>
         <div className="flex justify-between mb-6 text-sm text-gray-500">
           <div className="flex items-center">
