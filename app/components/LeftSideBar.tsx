@@ -29,7 +29,7 @@ export default function LeftSdieBar() {
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <ShoppingCart />
-                  <span>Shopping List</span>
+                  <span>Grocery List</span>
                 </div>
                 <Badge className="bg-gray-300">0</Badge>
               </div>

@@ -1,22 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { recipes as initialRecipes } from "../data/recipes";
+import { recipes } from "../data/recipes";
+import { useRouter } from "next/navigation";
 
-export default function RecipeList({ onSelectRecipe }) {
-  const [recipes, setRecipes] = useState(initialRecipes);
+export default function RecipeList() {
+  const router = useRouter();
 
-  useEffect(() => {
-    const storedRecipes = JSON.parse(localStorage.getItem("recipes") || "[]");
-    setRecipes([...initialRecipes, ...storedRecipes]);
-  }, []);
+  function onSelectRecipe(recipe: {
+    id: string;
+    name: string;
+    description: string;
+    image: string;
+    ingredients: string[];
+    instructions: string[];
+    cookTime: number;
+    servings: number;
+  }): void {
+    router.push(`/recipes/${recipe.id}`);
+  }
 
   return (
-    <div className="grid grid-cols-1 gap-8">
+    <div className="grid grid-cols-4 gap-4 p-4">
       {recipes.map((recipe) => (
         <div
           onClick={() => onSelectRecipe(recipe)}
-          className="bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+          className="bg-white shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
         >
           <img
             src={recipe.image}

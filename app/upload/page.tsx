@@ -129,7 +129,6 @@ export default function UploadRecipePage() {
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>
@@ -145,7 +144,6 @@ export default function UploadRecipePage() {
             id="cookTime"
             value={cookTime}
             onChange={(e) => setCookTime(e.target.value)}
-            required
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>
@@ -161,7 +159,6 @@ export default function UploadRecipePage() {
             id="servings"
             value={servings}
             onChange={(e) => setServings(e.target.value)}
-            required
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>

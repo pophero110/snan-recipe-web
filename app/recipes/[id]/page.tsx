@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { recipes as initialRecipes } from "../../data/recipes";
+import { recipes } from "../../data/recipes";
 import Link from "next/link";
 import { Clock, Users, Plus, Check, PlayCircle } from "lucide-react";
 
@@ -12,44 +12,13 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   );
 
   useEffect(() => {
-    const storedRecipes = JSON.parse(localStorage.getItem("recipes") || "[]");
-    const allRecipes = [...initialRecipes, ...storedRecipes];
-    const foundRecipe = allRecipes.find((r) => r.id === params.id);
-    setRecipe(foundRecipe);
-
-    const storedList = localStorage.getItem("shoppingList");
-    if (storedList && foundRecipe) {
-      const currentList = new Set(JSON.parse(storedList));
-      setAddedIngredients(
-        new Set(
-          foundRecipe.ingredients.reduce(
-            (acc: number[], ingredient: string, index: number) => {
-              if (currentList.has(ingredient)) {
-                acc.push(index);
-              }
-              return acc;
-            },
-            []
-          )
-        )
-      );
-    }
+    const recipe = recipes.find((r) => r.id === params.id);
+    setRecipe(recipe);
   }, [params.id]);
 
   if (!recipe) {
     return <div></div>;
   }
-
-  const addToShoppingList = (ingredient: string, index: number) => {
-    const storedList = localStorage.getItem("shoppingList");
-    let currentList = storedList ? JSON.parse(storedList) : [];
-
-    if (!currentList.includes(ingredient)) {
-      currentList.push(ingredient);
-      localStorage.setItem("shoppingList", JSON.stringify(currentList));
-      setAddedIngredients(new Set(addedIngredients).add(index));
-    }
-  };
 
   return (
     <div className="px-4">

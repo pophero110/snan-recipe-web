@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import "@copilotkit/react-ui/styles.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -17,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} max-h-screen`}>
-        <SidebarProvider>{children}</SidebarProvider>
-      </body>
+      <body className={`${inter.className} max-h-screen`}>{children}</body>
     </html>
   );
 }
