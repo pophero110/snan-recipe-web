@@ -1,7 +1,9 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import {Inter} from "next/font/google";
 import "@copilotkit/react-ui/styles.css";
-const inter = Inter({ subsets: ["latin"] });
+import {AppRouterCacheProvider} from "@mui/material-nextjs/v13-appRouter";
+
+const inter = Inter({subsets: ["latin"]});
 
 export const metadata = {
   title: "Minimalist Recipes",
@@ -10,13 +12,16 @@ export const metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: {
+                                     children,
+                                   }: {
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} max-h-screen`}>{children}</body>
+    <body className={`${inter.className}`}>
+    {/*https://mui.com/material-ui/integrations/nextjs/*/}
+    <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+    </body>
     </html>
   );
 }
