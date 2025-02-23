@@ -2,6 +2,7 @@ import "./globals.css";
 import {Inter} from "next/font/google";
 import "@copilotkit/react-ui/styles.css";
 import {AppRouterCacheProvider} from "@mui/material-nextjs/v13-appRouter";
+import { Container } from "@mui/material";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -20,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
     <body className={`${inter.className}`}>
     {/*https://mui.com/material-ui/integrations/nextjs/*/}
-    <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+    <AppRouterCacheProvider> <Container className={"pt-4"}>{children}</Container></AppRouterCacheProvider>
     </body>
     </html>
   );

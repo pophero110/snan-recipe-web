@@ -6,7 +6,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarProvider,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { ShoppingCart, Heart } from "lucide-react";
