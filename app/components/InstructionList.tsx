@@ -3,14 +3,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function IngredientList({ingredients}: { ingredients: string[] }) {
+export default function InstructionList({instructions}: { instructions: string[] }) {
 
   return (
         <List dense disablePadding>
-          {ingredients.map(ingredient => (
-            <ListItem key={ingredient}>
+          {instructions.map((instruction, index) => (
+            <ListItem key={instruction}>
               <ListItemText
-                primary={'- ' + ingredient}
+                primary={(index + 1) + ". " + instruction}
               />
             </ListItem>
           ))}

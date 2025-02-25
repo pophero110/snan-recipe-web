@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import RecipeCard from "./RecipeCard";
 import {Grid2} from "@mui/material";
 
-export default function RecipeList() {
+export default function RecipeGrid() {
   const router = useRouter();
 
   function onSelectRecipe(recipeId: string): void {
@@ -13,7 +13,7 @@ export default function RecipeList() {
   }
 
   return (
-  <Grid2 container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+  <Grid2 container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2 }}>
     {recipes.map((recipe, index) => (
       <Grid2 key={index} size={{ xs: 2, sm: 4, md: 4 }}>
         <RecipeCard recipe={recipe} onSelectRecipe={() => onSelectRecipe(recipe.id)}></RecipeCard>

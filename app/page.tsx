@@ -1,10 +1,10 @@
 "use client";
 
-import RecipeList from "./components/RecipeList";
+import RecipeGrid from "./components/RecipeGrid";
 
 export default function Home() {
 
   return (
-      <RecipeList />
+      <RecipeGrid />
   );
 }

@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
     <body className={`${inter.className}`}>
     {/*https://mui.com/material-ui/integrations/nextjs/*/}
-    <AppRouterCacheProvider> <Container className={"pt-4"}>{children}</Container></AppRouterCacheProvider>
+    <AppRouterCacheProvider> <Container className={"pt-4 pb-24"}>{children}</Container></AppRouterCacheProvider>
     </body>
     </html>
   );

@@ -4,8 +4,11 @@ import React, {useEffect, useState} from "react";
 import {recipes} from "../../data/recipes";
 import {Clock, Users} from "lucide-react";
 import {Recipe} from "@/app/types/recipe";
-import IngredientList from "@/app/components/IngredientList";
+import IngredientTable from "@/app/components/IngredientTable";
 import {Box, Divider, Stack, Typography, useTheme} from "@mui/material";
+import IngredientList from "@/app/components/IngredientList";
+import InstructionList from "@/app/components/InstructionList";
+import IconText from "@/app/components/IconText";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -24,34 +27,23 @@ export default function RecipePage({params}: { params: { id: string } }) {
     return <div>404</div>;
   }
   return (
-    <Stack spacing={4}>
-      <Stack spacing={2}>
+    <Stack spacing={2}>
+      <Stack spacing={1}>
         <Typography variant={"h3"}>{recipe.name}</Typography>
         <Typography variant={"body1"}>{recipe.description}</Typography>
-        <div className="flex justify-between mb-6 text-sm text-gray-500">
-          <div className="flex items-center">
-            <Clock size={16} className="mr-2"/>
-            <span>{recipe.cookTimeInMin} mins</span>
-          </div>
-          <div className="flex items-center">
-            <Users size={16} className="mr-2"/>
-            <span>{recipe.servings} servings</span>
-          </div>
-        </div>
+        <Stack spacing={2} direction="row">
+          <IconText icon={<Clock size={16}/>} text={recipe.cookTimeInMin + " mins"}></IconText>
+          <IconText icon={<Users size={16}/>} text={recipe.servings + " servings"}></IconText>
+        </Stack>
       </Stack>
-      <Stack spacing={2}>
+      <Stack>
         <Typography variant={"h5"}>Ingredients</Typography>
+        {/*<IngredientTable ingredients={recipe.ingredients}></IngredientTable>*/}
         <IngredientList ingredients={recipe.ingredients}></IngredientList>
       </Stack>
-      <Stack spacing={2}>
-        <Typography variant={"h5"}>Instruction</Typography>
-        <ol className="list-decimal list-inside space-y-4">
-          {recipe.instructions.map((instruction, index) => (
-            <li key={index} className="mb-2 text-gray-600">
-              {instruction}
-            </li>
-          ))}
-        </ol>
+      <Stack>
+        <Typography variant={"h5"}>Instructions</Typography>
+        <InstructionList instructions={recipe.instructions}></InstructionList>
       </Stack>
     </Stack>
   );
