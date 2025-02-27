@@ -36,7 +36,7 @@ export default function SearchPage({
             >
               <div className="bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
                 <img
-                  src={recipe.image}
+                  src={recipe.imageUrl}
                   alt={recipe.name}
                   className="w-full h-48 object-cover"
                 />
@@ -44,7 +44,7 @@ export default function SearchPage({
                   <h2 className="text-xl font-light mb-2">{recipe.name}</h2>
                   <p className="text-gray-600 text-sm">{recipe.description}</p>
                   <div className="mt-4 text-sm text-gray-500">
-                    {recipe.ingredients.length} ingredients | {recipe.cookTime}{" "}
+                    {recipe.ingredients.length} ingredients | {recipe.cookTimeInMin}{" "}
                     mins
                   </div>
                 </div>
