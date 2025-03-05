@@ -1,31 +1,36 @@
 "use client";
 
 import React, {useEffect, useState} from "react";
-import {recipes} from "../../data/recipes";
 import {Clock, Users} from "lucide-react";
 import {Recipe} from "@/app/types/recipe";
-import IngredientTable from "@/app/components/IngredientTable";
-import {Box, Divider, Stack, Typography, useTheme} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import IngredientList from "@/app/components/IngredientList";
 import InstructionList from "@/app/components/InstructionList";
 import IconText from "@/app/components/IconText";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  dir?: string;
-  index: number;
-  value: number;
-}
-
 export default function RecipePage({params}: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
-    const recipe: Recipe | undefined = recipes.find((r) => r.id === params.id);
-    setRecipe(recipe);
+    async function fetchRecipe() {
+      const res = await fetch('http://localhost:3000/recipes/' + params.id)
+      return await res.json();
+    }
+    fetchRecipe().then((data) => {
+      setIsLoading(false)
+      setRecipe(data)
+      console.log(data)
+    })
   }, [params.id]);
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
   if (!recipe) {
     return <div>404</div>;
   }
+
   return (
     <Stack spacing={2}>
       <Stack spacing={1}>
@@ -38,7 +43,6 @@ export default function RecipePage({params}: { params: { id: string } }) {
       </Stack>
       <Stack>
         <Typography variant={"h5"}>Ingredients</Typography>
-        {/*<IngredientTable ingredients={recipe.ingredients}></IngredientTable>*/}
         <IngredientList ingredients={recipe.ingredients}></IngredientList>
       </Stack>
       <Stack>

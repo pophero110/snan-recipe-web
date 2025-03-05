@@ -1,22 +1,15 @@
-"use client";
-
-import {recipes} from "../data/recipes";
-import {useRouter} from "next/navigation";
 import RecipeCard from "./RecipeCard";
 import {Grid2} from "@mui/material";
+import {Recipe} from "@/app/types/recipe";
 
-export default function RecipeGrid() {
-  const router = useRouter();
-
-  function onSelectRecipe(recipeId: string): void {
-    router.push(`/recipes/${recipeId}`);
-  }
-
+export default async function RecipeGrid() {
+  const res = await fetch('http://localhost:3000/recipes', { cache: 'no-store'})
+  const recipes: Recipe[] = await res.json()
   return (
   <Grid2 container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2 }}>
     {recipes.map((recipe, index) => (
       <Grid2 key={index} size={{ xs: 2, sm: 4, md: 4 }}>
-        <RecipeCard recipe={recipe} onSelectRecipe={() => onSelectRecipe(recipe.id)}></RecipeCard>
+        <RecipeCard recipe={recipe}></RecipeCard>
       </Grid2>
     ))}
   </Grid2>);
