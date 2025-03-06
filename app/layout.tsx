@@ -24,7 +24,7 @@ export default function RootLayout({
     {/*https://mui.com/material-ui/integrations/nextjs/*/}
     <AppRouterCacheProvider>
       <MenuBar></MenuBar>
-      <Container className={"pt-4 min-h-screen bg-white shadow"}>{children}</Container>
+      <Container className={"pt-4 pb-4 min-h-screen bg-white shadow"}>{children}</Container>
     </AppRouterCacheProvider>
     </body>
     </html>

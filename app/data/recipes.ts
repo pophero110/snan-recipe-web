@@ -2,7 +2,7 @@ import { Recipe } from "../types/recipe";
 
 export const recipes: Recipe[] = [
   {
-    id: '1',
+    _id: '1',
     name: 'Spaghetti Carbonara',
     description: 'A classic Italian pasta dish with eggs, cheese, and pancetta.',
     imageUrl: '/placeholder.svg?height=300&width=400',
@@ -29,7 +29,7 @@ export const recipes: Recipe[] = [
     servings: 4
   },
   {
-    id: '2',
+    _id: '2',
     name: 'Chicken Stir-Fry',
     description: 'A quick and easy Asian-inspired dish with vegetables and tender chicken.',
     imageUrl: '/placeholder.svg?height=300&width=400',
@@ -63,7 +63,7 @@ export const recipes: Recipe[] = [
     servings: 4
   },
   {
-    id: '3',
+ _id: '3',
     name: 'Vegetarian Lentil Soup',
     description: 'A hearty and nutritious soup packed with lentils and vegetables.',
     imageUrl: '/placeholder.svg?height=300&width=400',

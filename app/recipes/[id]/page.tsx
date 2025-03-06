@@ -1,6 +1,4 @@
-"use client";
-
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Clock, Users} from "lucide-react";
 import {Recipe} from "@/app/types/recipe";
 import {Stack, Typography} from "@mui/material";
@@ -8,24 +6,9 @@ import IngredientList from "@/app/components/IngredientList";
 import InstructionList from "@/app/components/InstructionList";
 import IconText from "@/app/components/IconText";
 
-export default function RecipePage({params}: { params: { id: string } }) {
-  const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  useEffect(() => {
-    async function fetchRecipe() {
-      const res = await fetch('http://localhost:3000/recipes/' + params.id)
-      return await res.json();
-    }
-    fetchRecipe().then((data) => {
-      setIsLoading(false)
-      setRecipe(data)
-      console.log(data)
-    })
-  }, [params.id]);
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
+export default async function RecipePage({params}: { params: { id: string } }) {
+  const res = await fetch('http://localhost:3000/recipes/' + params.id, { cache: 'no-store'})
+  const recipe: Recipe = await res.json()
 
   if (!recipe) {
     return <div>404</div>;
