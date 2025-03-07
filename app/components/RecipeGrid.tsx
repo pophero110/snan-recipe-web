@@ -3,7 +3,7 @@ import {Grid2} from "@mui/material";
 import {Recipe} from "@/app/types/recipe";
 
 export default async function RecipeGrid() {
-  const res = await fetch('http://localhost:3000/recipes', { cache: 'no-store'})
+  const res = await fetch(process.env.NEXT_PUBLIC_SNAN_RECIPE_API_URL + '/recipes', { cache: 'no-store'})
   const recipes: Recipe[] = await res.json()
   return (
   <Grid2 container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2 }}>

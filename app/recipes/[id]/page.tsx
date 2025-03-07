@@ -7,7 +7,7 @@ import InstructionList from "@/app/components/InstructionList";
 import IconText from "@/app/components/IconText";
 
 export default async function RecipePage({params}: { params: { id: string } }) {
-  const res = await fetch('http://localhost:3000/recipes/' + params.id, { cache: 'no-store'})
+  const res = await fetch(process.env.NEXT_PUBLIC_SNAN_RECIPE_API_URL + '/recipes/' + params.id, { cache: 'no-store'})
   const recipe: Recipe = await res.json()
 
   if (!recipe) {

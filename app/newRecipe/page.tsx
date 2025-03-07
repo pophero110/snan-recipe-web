@@ -5,7 +5,6 @@ import {useRouter} from "next/navigation";
 import {Box, Button, TextField} from "@mui/material";
 import IngredientMultiSelectionInput from "@/app/components/IngredientMultiSelectionInput";
 import InstructionMultiInput from "@/app/components/InstructionMultiInput";
-import { revalidatePath } from 'next/cache'
 
 export default function UploadRecipePage() {
   const router = useRouter();
@@ -27,7 +26,7 @@ export default function UploadRecipePage() {
       instructions: instructions.filter(i => i.trim() !== "")
     };
 
-    const response = await fetch('http://localhost:3000/recipes', {
+    const response = await fetch(process.env.NEXT_PUBLIC_SNAN_RECIPE_API_URL + '/recipes', {
       method: 'POST',
       headers: {
         'Content-Type': "application/json"
