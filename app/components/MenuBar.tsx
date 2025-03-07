@@ -14,7 +14,7 @@ export default function MenuBar() {
             <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
               <Link href="/">RecipeCraft</Link>
             </Typography>
-          <Button color="inherit"> <Link href="/newRecipe">Create Recipe</Link></Button>
+          <Link href="/newRecipe"><Button color="inherit">Create Recipe</Button></Link>
         </Toolbar>
       </AppBar>
     </Box>
