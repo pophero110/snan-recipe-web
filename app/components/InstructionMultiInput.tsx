@@ -23,7 +23,7 @@ export default function InstructionMultiInput({instructions, setInstructions}: {
   const instructionsEle = instructions.map((instruction, index) => (
     <div key={index} className="flex items-center mt-2">
       <TextField multiline label={`Step ${index + 1}`} fullWidth
-                 value={instruction.text}
+                 value={instruction}
                  onChange={(e) =>
                    handleInstructionChange(index, e.target.value)
                  }/>
